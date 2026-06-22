@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>九游官网 · 知识速查入口</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: #f4f9fc;
+      color: #1e2b34;
+      line-height: 1.6;
+      padding: 20px 16px 40px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 1120px;
+      width: 100%;
+    }
+
+    /* 顶部标识+标语 */
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .page-header h1 {
+      font-size: 1.9rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #115b63;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px 6px;
+    }
+
+    .page-header h1 small {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #3a7d85;
+      background: #d9edf0;
+      padding: 0.2rem 0.9rem;
+      border-radius: 30px;
+      line-height: 1.4;
+    }
+
+    .page-header .sub {
+      margin-top: 8px;
+      color: #3f6269;
+      font-size: 1rem;
+      border-left: 4px solid #38a3a5;
+      padding-left: 14px;
+      background: #ebf5f7;
+      border-radius: 0 8px 8px 0;
+      padding: 10px 16px;
+    }
+
+    /* 说明区 —— 帮助快速识别 */
+    .identify-card {
+      background: white;
+      border-radius: 24px;
+      padding: 24px 22px;
+      margin-bottom: 28px;
+      box-shadow: 0 6px 18px rgba(56, 163, 165, 0.08);
+      border: 1px solid #d8e9ec;
+    }
+
+    .identify-card h2 {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #145c66;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .identify-card h2::before {
+      content: "📌";
+      font-size: 1.3rem;
+    }
+
+    .identify-card p {
+      margin-bottom: 10px;
+    }
+
+    .identify-card strong {
+      color: #0b6b73;
+    }
+
+    .identify-card .link-sentence {
+      background: #eef6f8;
+      padding: 12px 16px;
+      border-radius: 14px;
+      margin: 16px 0 4px;
+      font-size: 1rem;
+      border-left: 4px solid #51b5b8;
+    }
+
+    /* 目录感布局：网格卡片 */
+    .grid-section {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .grid-card {
+      background: white;
+      border-radius: 22px;
+      padding: 22px 20px;
+      box-shadow: 0 4px 12px rgba(56, 115, 120, 0.06);
+      border: 1px solid #d4e5e9;
+      transition: transform 0.1s ease;
+    }
+
+    .grid-card:hover {
+      transform: translateY(-2px);
+      border-color: #86c4c9;
+    }
+
+    .grid-card h3 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #0b5f68;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .grid-card p {
+      color: #2b4b52;
+      margin-bottom: 6px;
+      font-size: 0.96rem;
+    }
+
+    .grid-card ul {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 8px;
+    }
+
+    .grid-card li {
+      padding: 5px 0 5px 24px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%2338a3a5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>') left center no-repeat;
+      background-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    /* 提示区 */
+    .tip-area {
+      background: #e2f2f4;
+      border-radius: 20px;
+      padding: 20px 22px;
+      margin-bottom: 28px;
+      border: 1px solid #b8d6db;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 6px 16px;
+    }
+
+    .tip-area .tip-icon {
+      font-size: 1.6rem;
+      line-height: 1;
+    }
+
+    .tip-area .tip-content {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .tip-area .tip-content p {
+      margin-bottom: 4px;
+    }
+
+    .tip-area .tip-content strong {
+      color: #115963;
+    }
+
+    /* 相关信息区 —— FAQ摘要风格 */
+    .info-faq {
+      background: white;
+      border-radius: 24px;
+      padding: 22px 22px 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      border: 1px solid #d1e2e6;
+      margin-bottom: 24px;
+    }
+
+    .info-faq h3 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #175e67;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .faq-item {
+      padding: 12px 0;
+      border-bottom: 1px solid #e2f0f2;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-q {
+      font-weight: 500;
+      color: #1c555e;
+      display: block;
+      margin-bottom: 4px;
+      font-size: 1rem;
+    }
+
+    .faq-a {
+      color: #2c5a62;
+      padding-left: 4px;
+      font-size: 0.95rem;
+    }
+
+    .faq-a a {
+      color: #1d7a85;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      font-weight: 500;
+    }
+
+    /* 底部 */
+    .footer-note {
+      text-align: center;
+      padding-top: 12px;
+      border-top: 1px solid #cde0e4;
+      color: #4f737b;
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+
+    .footer-note a {
+      color: #197a85;
+      text-decoration: none;
+      border-bottom: 1px dotted #7cb4ba;
+    }
+
+    /* 响应式 */
+    @media (min-width: 600px) {
+      body {
+        padding: 30px 28px 50px;
+      }
+
+      .grid-section {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .page-header h1 {
+        font-size: 2.2rem;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .grid-section {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .identify-card {
+        padding: 30px 32px;
+      }
+
+      .info-faq {
+        padding: 28px 32px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .page-header h1 {
+        font-size: 1.5rem;
+      }
+      .identify-card, .grid-card {
+        padding: 18px 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 页眉 -->
+    <header class="page-header">
+      <h1>
+        <span>九游官网</span>
+        <small>知识库·入口</small>
+      </h1>
+      <div class="sub">
+        从用户视角快速识别平台定位 · 目录化卡片指引
+      </div>
+    </header>
+
+    <!-- 说明区：帮助用户一眼了解用途 -->
+    <section class="identify-card">
+      <h2>这是怎样的站点？</h2>
+      <p>
+        <strong>九游</strong> 是一个以游戏兴趣为起点的综合社区与工具平台。很多用户第一次访问 <a href="https://coms-jiuyou.com" style="color:#136f7a;text-decoration:underline;text-underline-offset:2px;">九游官网</a> 时，都会好奇它主要提供哪些服务。简单来说，你可以在其中找到游戏资讯、玩家讨论、实用查询以及官方活动聚合。
+      </p>
+      <p>
+        与纯粹的游戏媒体不同，这里更强调“由玩家共建”的内容生态——无论是攻略整理、版本更新笔记，还是自定义工具，都有专门的版块持续维护。
+      </p>
+      <div class="link-sentence">
+        💡 如果你正在寻找一个集中的游戏知识起点，可以直接把 <a href="https://coms-jiuyou.com" style="color:#0d5f68;font-weight:600;text-decoration:underline;">九游官网</a> 加入书签，之后从首页的导航网格快速定位你想了解的模块。
+      </div>
+    </section>
+
+    <!-- 目录感网格卡片：特点 + 场景 -->
+    <div class="grid-section">
+      <div class="grid-card">
+        <h3>📋 特点一览</h3>
+        <ul>
+          <li>内容由社区与官方协同整理</li>
+          <li>分类清晰：资讯 / 数据库 / 工具 / 论坛</li>
+          <li>移动端响应式，随时随地查阅</li>
+          <li>定期更新版本日志与活动预告</li>
+        </ul>
+      </div>
+      <div class="grid-card">
+        <h3>🧭 适用场景</h3>
+        <ul>
+          <li>想快速了解某款游戏的近期动态</li>
+          <li>查找特定任务、道具或数值对照</li>
+          <li>参与玩家讨论或查阅历史公告</li>
+          <li>获取官方提供的计算器/模拟器入口</li>
+        </ul>
+      </div>
+      <div class="grid-card">
+        <h3>🔍 信息组织方式</h3>
+        <p>首页采用板块分区，每个卡片代表一个知识类别。你可以像翻目录一样浏览，也可以直接搜索关键词。</p>
+        <p style="margin-top: 8px; color: #2b6e78;">常用入口：<a href="https://coms-jiuyou.com" style="color:#136f7a;">九游官网</a> 首页顶部导航</p>
+      </div>
+    </div>
+
+    <!-- 提示区 -->
+    <div class="tip-area">
+      <div class="tip-icon">💬</div>
+      <div class="tip-content">
+        <p><strong>快速提示：</strong> 如果你是初次接触，建议先浏览首页的「热门」与「新进」两个栏目，它们能反映当前社区关注重心。</p>
+        <p style="margin-top:6px;">🔹 大部分工具类页面无需登录即可使用；论坛发言则需要注册账号。</p>
+      </div>
+    </div>
+
+    <!-- 相关信息区：FAQ摘要 -->
+    <div class="info-faq">
+      <h3>❓ 常见疑问 · 摘要</h3>
+      <div class="faq-item">
+        <span class="faq-q">Q1: 这个网站和游戏官方是什么关系？</span>
+        <div class="faq-a">九游是独立的玩家社区平台，并非某一家游戏公司的官网。但它会收录、整理来自多家开发商的公开信息，并标注来源。更多背景可浏览 <a href="https://coms-jiuyou.com">九游官网</a> 的“关于”页面。</div>
+      </div>
+      <div class="faq-item">
+        <span class="faq-q">Q2: 内容更新频率如何？</span>
+        <div class="faq-a">资讯板块通常每日更新；数据库与工具类内容随游戏版本迭代同步修订。部分历史内容由志愿者维护，可能略有延迟。</div>
+      </div>
+      <div class="faq-item">
+        <span class="faq-q">Q3: 移动端浏览体验怎么样？</span>
+        <div class="faq-a">本站采用响应式设计，手机和平板均可自适应。卡片布局在窄屏下单列显示，触控友好。</div>
+      </div>
+    </div>
+
+    <!-- 底部 -->
+    <footer class="footer-note">
+      <p>整理自公开资料 · 供快速参考 · <a href="https://coms-jiuyou.com">九游官网</a></p>
+      <p style="margin-top:6px; opacity:0.75;">内容方向：知识库入口式 · 目录感布局</p>
+    </footer>
+  </div>
+</body>
+</html>
